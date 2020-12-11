@@ -7,15 +7,15 @@ export class ContainerLambdaStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const repo = ecr.Repository.fromRepositoryName(this, 'EcrRepo',"contlambda");
+    //const repo = ecr.Repository.fromRepositoryName(this, 'EcrRepo',"contlambda");
 
-    const containerFn = new lambda.DockerImageFunction(this, 'ECRFunction', {
-      code: lambda.DockerImageCode.fromEcr(repo),
+    //const containerFn = new lambda.DockerImageFunction(this, 'ECRFunction', {
+    //  code: lambda.DockerImageCode.fromEcr(repo),
+    //});
+
+    const containerFn = new lambda.DockerImageFunction(this, 'ContainerLambdaFunction', {
+       code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../..')),
     });
-
-    // const containerFn = new lambda.DockerImageFunction(this, 'ContainerLambdaFunction', {
-    //   code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../..')),
-    // });
 
 
 
