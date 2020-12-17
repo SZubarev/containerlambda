@@ -22,5 +22,7 @@ func handler(ctx context.Context, s3Event events.S3Event) (string, error) {
 
 	s := utils.GetHello()
 
+	print("Hello world")
+
 	return s, nil
 }

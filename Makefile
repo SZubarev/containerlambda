@@ -1,15 +1,14 @@
-PHONY: build build_docker deploy
+.PHONY: build build_docker deploy
 
 .EXPORT_ALL_VARIABLES:
-AWS_PROFILE = private
+AWS_PROFILE = default
 
 build:
-	go build -o bin/main ./cmd
-
+	GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/main ./cmd
 
 build_docker:
 	docker build -t contlambda .
 
-deploy:
+deploy: build
 	cd cdk;\
 	cdk deploy --profile ${AWS_PROFILE}
