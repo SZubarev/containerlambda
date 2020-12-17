@@ -1,6 +1,10 @@
-FROM golang:1-alpine3.12 AS build-image
+FROM golang:alpine AS build-image
 
 WORKDIR /app
+
+ENV GOPROXY direct
+
+RUN apk --no-cache add git
 
 COPY go.mod go.sum ./
 RUN go mod download
