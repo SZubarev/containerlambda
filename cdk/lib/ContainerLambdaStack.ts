@@ -10,16 +10,9 @@ export class ContainerLambdaStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    //const repo = ecr.Repository.fromRepositoryName(this, 'EcrRepo',"contlambda");
-
-    //const containerFn = new lambda.DockerImageFunction(this, 'ECRFunction', {
-    //  code: lambda.DockerImageCode.fromEcr(repo),
-    //});
-
     const asset = new DockerImageAsset(this, 'container-lambda', {
       directory: path.join(__dirname, "..", ".."),
     });
-
 
     const containerFn = new lambda.DockerImageFunction(this, 'ContainerLambdaFn', {
        //code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../..')),
@@ -29,16 +22,6 @@ export class ContainerLambdaStack extends cdk.Stack {
          tag:asset.sourceHash
        }),
     });
-
-
-    const goLambdaFn = new lambda.Function(this,'RegularLambdaFn',{
-      runtime: lambda.Runtime.GO_1_X,
-      memorySize: 1024,
-      timeout: Duration.seconds(30),
-      handler: 'main',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../bin')),
-    })
-
 
   }
 }

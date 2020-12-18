@@ -12,4 +12,4 @@ build_docker:
 
 deploy: build
 	cd cdk;\
-	cdk deploy --profile ${AWS_PROFILE}
+	cdk deploy '*' --profile ${AWS_PROFILE}
