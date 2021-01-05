@@ -19,4 +19,4 @@ deploy: build
 
 destroy:
 	cd cdk;\
-	cdk destroy --profile ${AWS_PROFILE}
+	cdk destroy '*' --profile ${AWS_PROFILE}
