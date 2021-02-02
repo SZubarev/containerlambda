@@ -1,7 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as path from 'path';
-import * as ecr from '@aws-cdk/aws-ecr';
+import * as iam from '@aws-cdk/aws-iam'
 import { DockerImageAsset } from '@aws-cdk/aws-ecr-assets';
 import { Duration } from '@aws-cdk/core';
 
@@ -21,7 +21,16 @@ export class ContainerLambdaStack extends cdk.Stack {
        code: lambda.DockerImageCode.fromEcr(asset.repository,{
          tag:asset.sourceHash
        }),
+       environment:{
+        PARAM1: "test value"
+      }
     });
+
+    containerFn.addToRolePolicy(new iam.PolicyStatement({
+      actions:["s3:ListAllMyBuckets"],
+      resources:["arn:aws:s3:::*"],
+      effect: iam.Effect.ALLOW
+    }))
 
   }
 }
